@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.FullimageScreen">
+
+    <FrameLayout
+        android:id="@+id/full_image_view_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/full_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/loading" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/white"
+            android:drawableRight="@drawable/ic_next"
+            android:text="@string/next"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:cornerRadius="30dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/share_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/on_back_press"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:drawableLeft="@drawable/ic_back"
+                android:paddingLeft="20dp"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:paddingRight="30dp"
+                android:gravity="center"
+                android:text="@string/more_actions"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_weight="3.5"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/social_dialog_box"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:text="@string/share_with_friends"
+                            android:textColor="@color/white"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="5"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/messenger_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:src="@drawable/messenger"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="2dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/whatsapp_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:src="@drawable/messenger"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="2dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/more_share_option"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_more"
+                                app:civ_border_color="@color/white"
+                                app:civ_border_width="2dp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/set_wallpaper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/ic_wallpaper"
+                    android:text="@string/set_as_wallpaper"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:cornerRadius="30dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/download_only"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transperant"
+                    android:drawableLeft="@drawable/ic_download"
+                    android:gravity="center_horizontal"
+                    android:text="@string/download_only"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+        <item
+            android:id="@+id/nav_share_app"
+            android:icon="@drawable/ic_share"
+            android:title="@string/menu_share_app" />
+        <item
+            android:id="@+id/nav_rate_us"
+            android:icon="@drawable/ic_rate_us"
+            android:title="@string/menu_rate_us" />
+        <item
+            android:id="@+id/nav_privacy_policy"
+            android:icon="@drawable/ic_privacy_policy"
+            android:title="@string/menu_privacy_policy" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/menu_exit" />
+</menu>

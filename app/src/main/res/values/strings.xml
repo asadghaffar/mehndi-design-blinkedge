@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Mehndi Design</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Drawer Layout items -->
+    <string name="menu_share_app">Share App</string>
+    <string name="menu_rate_us">Rate Us</string>
+    <string name="menu_privacy_policy">Privacy Policy</string>
+    <string name="menu_exit">Exit</string>
+
+    <!-- Exit App String -->
+    <string name="exit_app_text">Are You Sure You want to exit</string>
+
+    <!-- Download Image String -->
+    <string name="download_image_text">Download Image </string>
+
+    <!-- Share  -->
+    <string name="more_actions">More <b>Actions</b></string>
+
+    <!-- Share with firends -->
+    <string name="share_with_friends"><b>Share with your friends</b></string>
+
+    <!-- Set As Wallpaper -->
+    <string name="set_as_wallpaper">Set As Wallpaper</string>
+
+    <!-- Download Only -->
+    <string name="download_only">Download Only</string>
+
+    <!-- Share  -->
+    <string name="next">Next</string>
+
+
+</resources>

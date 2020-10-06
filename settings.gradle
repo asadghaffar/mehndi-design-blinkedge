@@ -1,0 +1,3 @@
+include ':shimmerlayout'
+include ':app'
+rootProject.name = "Mehndi Design"
