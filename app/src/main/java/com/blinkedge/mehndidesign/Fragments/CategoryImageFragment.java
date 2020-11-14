@@ -1,5 +1,6 @@
 package com.blinkedge.mehndidesign.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.blinkedge.mehndidesign.RecyclerViewAdapter.RecyclerViewCategoryImageA
 import com.blinkedge.mehndidesign.Modal.Modal;
 import com.blinkedge.mehndidesign.R;
 import com.blinkedge.mehndidesign.Singlation;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -36,8 +38,8 @@ import java.util.Map;
 
 public class CategoryImageFragment extends Fragment {
 
-    KProgressHUD kProgressHUD;
-    RecyclerView recyclerView;
+    //KProgressHUD kProgressHUD;
+    ShimmerRecyclerView recyclerView;
     StringRequest stringRequest;
     List<Modal> categoryModalList;
 
@@ -46,13 +48,13 @@ public class CategoryImageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_category_image, container, false);
         ids(root);
-        progressLoader();
+        //progressLoader();
         jsonResponse();
 
         return root;
     }
 
-    private void progressLoader() {
+    /*private void progressLoader() {
         try {
             kProgressHUD = KProgressHUD.create(getContext())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -64,7 +66,7 @@ public class CategoryImageFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // SetUp recyclerView
     private void setUpRecyclerView(List<Modal> categoryModalList) {
@@ -74,13 +76,14 @@ public class CategoryImageFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewCategoryImageAdapter);
     }
 
-    // Fetching Ddata From API
+    // Fetching Data From API
     private void jsonResponse() {
         stringRequest = new StringRequest(Request.Method.POST, API.GET_CATEGORY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d("response_", response);
                 try {
-                    kProgressHUD.dismiss();
+                    //kProgressHUD.dismiss();
                     Log.d("all_response", response);
                     JSONObject jsonObject = new JSONObject(response);
                     // Fetching Status
@@ -102,6 +105,7 @@ public class CategoryImageFragment extends Fragment {
                             categoryModal.setCatId(catId);
                             categoryModal.setCatImage(catImg);
                             categoryModal.setCatName(catName);
+
                             categoryModalList.add(categoryModal);
                         }
                         setUpRecyclerView(categoryModalList);
@@ -113,15 +117,15 @@ public class CategoryImageFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("error__", String.valueOf(error));
                 Toast.makeText(getContext(), "Server Did not responding", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            //Passing app_id 1
             // If there is one or more app on admin panel then we have to pass the app_id so the API will hit the specific app
             protected Map<String, String> getParams() {
                 Map<String, String> hashmap = new HashMap<>();
-                hashmap.put("app_id", "1");
+                hashmap.put("app_id", "4");
                 return hashmap;
             }
         };

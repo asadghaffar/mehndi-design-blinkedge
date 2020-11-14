@@ -2,6 +2,8 @@ package com.blinkedge.mehndidesign.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,22 +34,33 @@ import java.util.Map;
 
 public class CategoryAllImages extends AppCompatActivity {
 
-    RecyclerView recyclerViewAllImage;
-    KProgressHUD kProgressHUD;
-    StringRequest stringRequest;
-    List<Modal> allImagesModalList;
-    int catId;
+    private ShimmerRecyclerView recyclerViewAllImage;
+    private StringRequest stringRequest;
+    public static List<Modal> allImagesModalList;
+    private int catId;
+    private ImageView iconBackPress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_all_images);
 
-        /*progressLoader();*/
+        getSupportActionBar().hide();
+
         getData();
         jsonResponse();
         ids();
+        onClick();
 
+    }
+
+    private void onClick() {
+        iconBackPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     // Fetching cat_id through Intent from previous activity
@@ -73,15 +86,15 @@ public class CategoryAllImages extends AppCompatActivity {
 
     }
 
-    // Fetching Ddata From API
+    // Fetching Data From API
     private void jsonResponse() {
         stringRequest = new StringRequest(Request.Method.POST, API.CATEGORY_ALL_IMAGES, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /* kProgressHUD.dismiss();*/
                 try {
                     JSONObject jsonStatusObject = new JSONObject(response);
                     int status = jsonStatusObject.getInt("status");
+                    Log.d("status__", String.valueOf(status));
                     if (status == 1) {
                         JSONArray jsonArray = jsonStatusObject.getJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -107,7 +120,7 @@ public class CategoryAllImages extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(CategoryAllImages.this, "Server Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -129,25 +142,11 @@ public class CategoryAllImages extends AppCompatActivity {
 
     }
 
-   /* private void progressLoader()
-     {
-        try {
-            kProgressHUD = KProgressHUD.create(CategoryAllImages.this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setMaxProgress(100).setCancellable(true)
-                    .setLabel("Please wait...")
-                    .setDimAmount(0.5f)
-                    .setAutoDismiss(false)
-                    .show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
     // Id Function
     private void ids() {
         recyclerViewAllImage = findViewById(R.id.recycler_view_all_images);
         allImagesModalList = new ArrayList<>();
+        iconBackPress = findViewById(R.id.iconBackPress);
     }
 
 }

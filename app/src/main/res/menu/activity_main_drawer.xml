@@ -4,13 +4,20 @@
     tools:showIn="navigation_view">
 
         <item
+            android:id="@+id/ic_menu_favourite"
+            android:icon="@drawable/ic_action_bar_favourite"
+            android:title="@string/favourite_images" />
+
+        <item
             android:id="@+id/nav_share_app"
             android:icon="@drawable/ic_share"
             android:title="@string/menu_share_app" />
+
         <item
             android:id="@+id/nav_rate_us"
             android:icon="@drawable/ic_rate_us"
             android:title="@string/menu_rate_us" />
+
         <item
             android:id="@+id/nav_privacy_policy"
             android:icon="@drawable/ic_privacy_policy"

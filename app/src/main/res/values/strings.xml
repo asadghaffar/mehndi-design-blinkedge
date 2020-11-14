@@ -33,6 +33,7 @@
 
     <!-- Share  -->
     <string name="next">Next</string>
+    <string name="favourite_images">Favourite Images</string>
 
 
 </resources>

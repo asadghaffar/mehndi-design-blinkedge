@@ -50,7 +50,7 @@ public class RecyclerViewCategoryImageAdapter extends RecyclerView.Adapter<TextV
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(context, "Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Image Error", Toast.LENGTH_SHORT).show();
                     }
                 });
 

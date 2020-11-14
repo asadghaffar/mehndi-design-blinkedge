@@ -56,19 +56,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FullimageScreen extends AppCompatActivity {
 
-    LinearLayout shareLinear;
-    MaterialTextView OnBackPressFullImage;
-    ImageView fullimageView;
-    MaterialButton buttonNext;
-    MaterialButton buttonWallpaper;
-    MaterialTextView textViewDownload;
-    KProgressHUD kProgressHUD;
-    CircleImageView moreShareOption;
-    CircleImageView whatsappImage;
-    CircleImageView messengerImage;
-    String imagePath;
+    private LinearLayout shareLinear;
+    private MaterialTextView OnBackPressFullImage;
+    private ImageView fullimageView;
+    private MaterialButton buttonNext;
+    private MaterialButton download_only_button;
+    private KProgressHUD kProgressHUD;
+    private CircleImageView moreShareOption;
+    private CircleImageView whatsappImage;
+    private CircleImageView messengerImage;
+    private String imagePath;
     private String type = "";
-    Bitmap bitmap;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,6 @@ public class FullimageScreen extends AppCompatActivity {
 
         // Fetching image path from previous activity
         try {
-            kProgressHUD.show();
             imagePath = getIntent().getExtras().getString("imagePath", "");
             Log.d("imagePath", imagePath);
             if (!imagePath.equals("")) {
@@ -95,7 +93,6 @@ public class FullimageScreen extends AppCompatActivity {
                         .into(fullimageView, new Callback() {
                             @Override
                             public void onSuccess() {
-                                kProgressHUD.dismiss();
                             }
 
                             @Override
@@ -133,13 +130,47 @@ public class FullimageScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(FullimageScreen.this, "Image Shared to messenger", Toast.LENGTH_SHORT).show();
+
+                Uri imgUri = Uri.parse(imagePath);
+                Intent messengerIntent = new Intent(Intent.ACTION_SEND);
+                messengerIntent.setPackage("com.facebook.orca");
+                messengerIntent.putExtra(Intent.EXTRA_STREAM, imgUri);
+                messengerIntent.setType("image/*");
+                messengerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                try {
+                    startActivity(messengerIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(FullimageScreen.this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
         whatsappImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(FullimageScreen.this, "Image Shared", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FullimageScreen.this, "toast on whatsapp", Toast.LENGTH_SHORT).show();
+
+                Intent imageIntent = new Intent(Intent.ACTION_SEND);
+                Uri imageUri = Uri.parse(imagePath);
+                imageIntent.setType("image/*");
+                imageIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                imageIntent.setPackage("com.whatsapp");
+                startActivity(imageIntent);
+
+                /*Uri imgUri = Uri.parse(imagePath);
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.putExtra(Intent.EXTRA_STREAM, imgUri);
+                whatsappIntent.setType("image/*");
+                whatsappIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);*/
+                try {
+                    startActivity(imageIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(FullimageScreen.this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -150,16 +181,7 @@ public class FullimageScreen extends AppCompatActivity {
             }
         });
 
-        buttonWallpaper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonNext.setVisibility(View.GONE);
-                new MyAsync().execute();
-
-            }
-        });
-
-        textViewDownload.setOnClickListener(new View.OnClickListener() {
+        download_only_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -171,7 +193,6 @@ public class FullimageScreen extends AppCompatActivity {
                                 Toast.makeText(FullimageScreen.this, "Enable the permissions to download and use the wallpapers!"
                                         , Toast.LENGTH_SHORT).show();
                             } else {
-
                                 saveAction();
                             }
                         }
@@ -189,9 +210,21 @@ public class FullimageScreen extends AppCompatActivity {
         moreShareOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //shareItem(imagePath);
-                // Fast
-                shareImage(imagePath);
+
+                if (imagePath != null) {
+                    // Construct a ShareIntent with link to image
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
+                    shareIntent.setType("image/*");
+                    // Launch sharing dialog for image
+                    startActivity(Intent.createChooser(shareIntent, "Share Image"));
+                } else {
+                    Toast.makeText(FullimageScreen.this, "Error in sharing image", Toast.LENGTH_SHORT).show();
+                }
+
+
+                //shareImage(imagePath);
 
             }
         });
@@ -199,7 +232,7 @@ public class FullimageScreen extends AppCompatActivity {
 
     // Share Image
     public void shareImage(String path) {
-        MediaScannerConnection.scanFile(FullimageScreen.this, new String[]{path}, null,
+        /*MediaScannerConnection.scanFile(FullimageScreen.this, new String[]{path}, null,
                 new MediaScannerConnection.OnScanCompletedListener() {
                     public void onScanCompleted(String path, Uri uri) {
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -208,11 +241,11 @@ public class FullimageScreen extends AppCompatActivity {
                         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         startActivity(Intent.createChooser(shareIntent, ("Choose One")));
                     }
-                });
+                });*/
     }
 
     // Share Pic Function
-    public void shareItem(String url)   {
+    public void shareItem(String url) {
         try {
             Picasso.get().load(url).into(new Target() {
                 @Override
@@ -254,17 +287,15 @@ public class FullimageScreen extends AppCompatActivity {
 
     // Saving Image To Internal Strorage
     public void saveAction() {
-        File direct = new File(Environment.getExternalStorageDirectory() + "/" + getString(R.string.app_name));
-        if (!direct.exists()) {
-            direct.mkdirs();
-        }
         DownloadManager mgr = (DownloadManager) FullimageScreen.this.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri downloadUri = Uri.parse(imagePath);
+        Log.d("Sdfs__", downloadUri + "");
         DownloadManager.Request request = new DownloadManager.Request(downloadUri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-                .setDestinationInExternalPublicDir(String.valueOf(direct), "IMG_" + System.currentTimeMillis() + ".jpg");
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                        getString(R.string.app_name) + System.currentTimeMillis() + ".jpg");
         mgr.enqueue(request);
-        Toast.makeText(FullimageScreen.this, "Image Downloaded!"  , Toast.LENGTH_SHORT).show();
+        Toast.makeText(FullimageScreen.this, "Image Downloaded!", Toast.LENGTH_SHORT).show();
     }
 
     // Loading Function
@@ -281,58 +312,21 @@ public class FullimageScreen extends AppCompatActivity {
         }
     }
 
-    // Applying Wallpaper
-    class MyAsync extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                bitmap = Picasso.get().load(imagePath)
-                        .placeholder(R.drawable.loading).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            try {
-                WallpaperManager myWallpaperManager = WallpaperManager.getInstance(FullimageScreen.this);
-                if (myWallpaperManager != null && bitmap != null) {
-                    myWallpaperManager.setBitmap(bitmap);
-                    buttonNext.setVisibility(View.VISIBLE);
-                    Toast.makeText(FullimageScreen.this, "Wallpaper Updated", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     // Hide Share Layout on backPress
     public void onBackPressed() {
 
-        if (shareLinear.getVisibility()== View.VISIBLE)
-        {
+        if (shareLinear.getVisibility() == View.VISIBLE) {
             shareLinear.setVisibility(View.GONE);
-        }else
-        super.onBackPressed();
-
-
+        } else
+            super.onBackPressed();
 
     }
 
     // Ids Function
     private void id() {
         fullimageView = findViewById(R.id.full_image);
-        buttonWallpaper = findViewById(R.id.set_wallpaper);
-        textViewDownload = findViewById(R.id.download_only);
+        download_only_button = findViewById(R.id.download_only_button);
         moreShareOption = findViewById(R.id.more_share_option);
         buttonNext = findViewById(R.id.next_button);
         shareLinear = findViewById(R.id.share_linear);

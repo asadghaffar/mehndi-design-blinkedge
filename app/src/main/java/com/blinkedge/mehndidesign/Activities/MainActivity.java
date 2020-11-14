@@ -49,7 +49,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId())   {
+                switch (item.getItemId()) {
+
+                    case R.id.ic_menu_favourite:
+                        Intent favoriteIntent = new Intent(MainActivity.this, FavouriteActivity.class);
+                        startActivity(favoriteIntent);
+                        break;
+
                     case R.id.nav_share_app:
                         try {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);

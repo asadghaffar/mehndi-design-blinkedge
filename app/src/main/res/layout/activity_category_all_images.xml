@@ -4,11 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Activities.CategoryAllImages">
 
+    <include layout="@layout/custom_action_bar"/>
+
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recycler_view_all_images"
         android:layout_width="match_parent"
         android:layout_marginTop="5dp"

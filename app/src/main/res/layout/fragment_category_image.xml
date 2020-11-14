@@ -7,12 +7,17 @@
     android:orientation="vertical"
     tools:context=".Fragments.CategoryImageFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginLeft="5dp"
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/recycler_view_cat_image"
+        android:layout_width="match_parent"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/recycler_view_cat_image"/>
+        app:shimmer_demo_child_count="10"
+        app:shimmer_demo_grid_child_count="1"
+        app:shimmer_demo_layout="@layout/layout_demo_grid"
+        app:shimmer_demo_layout_manager_type="grid"
+        app:shimmer_demo_angle="20" />
 
 </LinearLayout>
