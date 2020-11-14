@@ -98,6 +98,7 @@ public class CategoryImageFragment extends Fragment {
                             Log.d("specific_response", response);
 
                             int catId = jsonObjectFetchData.getInt("cat_id");
+                            Log.d("catId", String.valueOf(catId));
                             String catName = jsonObjectFetchData.getString("cat_name");
                             String catImg = jsonObjectFetchData.getString("image");
 

@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,7 +20,6 @@ import com.blinkedge.mehndidesign.R;
 import com.blinkedge.mehndidesign.RecyclerViewAdapter.RecyclerViewAllImagesAdapter;
 import com.blinkedge.mehndidesign.Singlation;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +34,8 @@ public class CategoryAllImages extends AppCompatActivity {
 
     private ShimmerRecyclerView recyclerViewAllImage;
     private StringRequest stringRequest;
-    public static List<Modal> allImagesModalList;
+    private List<Modal> allImagesModalList;
+    public static List<Modal> emptyfavoriteItemData; // Empty List
     private int catId;
     private ImageView iconBackPress;
 
@@ -67,13 +66,13 @@ public class CategoryAllImages extends AppCompatActivity {
     private void getData() {
         try {
             catId = getIntent().getExtras().getInt("cat_id", 0);
+            Log.d("catid", String.valueOf(catId));
             if (catId == 0) {
                 Toast.makeText(this, "Data is unavailable!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -101,13 +100,14 @@ public class CategoryAllImages extends AppCompatActivity {
                             JSONObject jsonFetchAllImages = jsonArray.getJSONObject(i);
 
                             String fetchImage = jsonFetchAllImages.getString("wallpaper_image");
+                            int photoId = jsonFetchAllImages.getInt("photo_id");
 
                             Modal fetchImageModal = new Modal();
                             fetchImageModal.setAllImages(fetchImage);
+                            fetchImageModal.setImagesItemId(photoId);
 
                             allImagesModalList.add(fetchImageModal);
                             Log.d("size_check", allImagesModalList.size() + "_");
-
                         }
                         setUpRecyclerView();
                     } else {
@@ -120,6 +120,7 @@ public class CategoryAllImages extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("error_", String.valueOf(error));
                 Toast.makeText(CategoryAllImages.this, "Server Error", Toast.LENGTH_SHORT).show();
             }
         }) {

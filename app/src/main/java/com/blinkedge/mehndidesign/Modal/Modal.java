@@ -8,6 +8,33 @@ public class Modal {
     String catImage;
     String allImages;
     int catId;
+    int imagesItemId;
+    int favourtieImagesItemId;
+    boolean favouriteItems;
+
+    public int getFavourtieImagesItemId() {
+        return favourtieImagesItemId;
+    }
+
+    public void setFavourtieImagesItemId(int favourtieImagesItemId) {
+        this.favourtieImagesItemId = favourtieImagesItemId;
+    }
+
+    public boolean isFavouriteItems() {
+        return favouriteItems;
+    }
+
+    public void setFavouriteItems(boolean favouriteItems) {
+        this.favouriteItems = favouriteItems;
+    }
+
+    public int getImagesItemId() {
+        return imagesItemId;
+    }
+
+    public void setImagesItemId(int imagesItemId) {
+        this.imagesItemId = imagesItemId;
+    }
 
     public String getCatName() {
         return catName;
